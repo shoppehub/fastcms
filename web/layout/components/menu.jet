@@ -1,0 +1,72 @@
+<!-- NAVIGATION -->
+
+{{block nav(menu) }}
+
+<li class="nav-item">
+  {{if len(menu.Children)}}
+  <a href="#{{menu.Key}}" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false"
+    aria-controls="{{menu.Key}}">
+    {{menu.Title}}
+  </a>
+  {{else}}
+  <a href="{{menu.Href}}" class="nav-link">
+    {{menu.Title}}
+  </a>
+  {{end}}
+  {{ if len(menu.Children) }}
+  <div class="collapse " id="{{menu.Key}}">
+    <ul class="nav nav-sm flex-column">
+      {{ range iindex,item := menu.Children }}
+      {{yield nav(menu=item)}}
+      {{ end }}
+    </ul>
+  </div>
+  {{end}}
+</li>
+
+
+{{end}}
+
+
+{{block menu()}}
+<nav class="navbar navbar-vertical fixed-start navbar-expand-md navbar-light" id="sidebar">
+  <div class="container-fluid">
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      <img src="https://cbstyle.oss-cn-shanghai.aliyuncs.com/libs/dashkit/assets/img/logo.svg"
+        class="navbar-brand-img mx-auto" alt="...">
+    </a>
+
+
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse">
+
+      <!-- Navigation -->
+      <ul class="navbar-nav">
+        
+      {{ range index,menu:= menus }}
+        <li class="nav-item">
+          <a class="nav-link"  href="#{{menu.Key}}" data-bs-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="{{menu.Key}}">
+            <i class="fe {{menu.Icon?menu.Icon:" fe-file"}} "></i> {{menu.Title}}
+          </a>
+          {{ if len(menu.Children)  }}
+          <div class=" collapse " id="{{menu.Key}}">
+              <ul class="nav nav-sm flex-column">
+                {{ range iindex,item := menu.Children }}
+                {{yield nav(menu=item)}}
+                {{ end }}
+              </ul>
+          </div>
+          {{end}}
+        </li>
+      {{end}}
+
+      </ul>
+
+    </div> <!-- / .navbar-collapse -->
+
+  </div>
+</nav>
+{{end}}
