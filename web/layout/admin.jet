@@ -533,5 +533,4 @@
 
 <script src="/assets/js/{{namespace}}.bundle.js"></script>
 
-
 {{end}}

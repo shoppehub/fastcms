@@ -25,7 +25,7 @@
       {{end}}
     {{end}}
     
-    {{yield action(ds=ds)}}
+    {{yield action(ds=ds,itemJson=itemJson)}}
   </tr>
  {{end}}
 </tbody>

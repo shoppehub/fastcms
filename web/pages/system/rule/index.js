@@ -1,6 +1,5 @@
-import { Modal } from "bootstrap";
 const Data = window.Data;
-
+const Modal = window.Modal;
 import { save, init } from "@shoppehub/fastapi";
 import axios from "axios";
 
