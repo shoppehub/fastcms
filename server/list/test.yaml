@@ -1,0 +1,12 @@
+items:
+  - key: name
+    title: 名称
+    sort: true
+  - key: name
+    title: 名称
+    sort: true
+itemActions:
+  - key: edit
+    title: 编辑
+  - key: del
+    title: 删除

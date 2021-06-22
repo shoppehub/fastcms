@@ -1,0 +1,54 @@
+
+{{block body(ds)}}
+
+<tbody class="list fs-base" >
+  {{range iv,itemValue := ds.Values.Data}}
+  {{itemJson := json(itemValue)}}
+  <tr>
+    <td>
+      <!-- Checkbox -->
+      <div class="form-check">
+        <input class="form-check-input list-checkbox" type="checkbox" data-item={{itemJson}}>
+        <label class="form-check-label" ></label>
+      </div>
+    </td>
+    
+    {{range i,item := ds.Items}}
+      {{ if !item.Hidden}}
+        <td >
+            {{ if item.Type == "" || item.Type == "text"   }}
+              <span >{{itemValue[item.Key]}}</span>
+            {{else if item.Type == "a"}}  
+              <a class="text-reset" data-list-a="{{item.Key}}" href="#">{{itemValue[item.Key]}}</a>
+            {{end}}
+        </td>
+      {{end}}
+    {{end}}
+    
+    {{yield action(ds=ds)}}
+  </tr>
+ {{end}}
+</tbody>
+{{end}}
+
+
+{{block action(ds,itemJson)}}
+  {{ if len(ds.ItemActions) >0 }}
+  <td class="text-end">
+    <!-- Dropdown -->
+    <div class="dropdown">
+      <a class="dropdown-ellipses dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fe fe-more-vertical"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-end">
+        {{range i,item := ds.ItemActions}}
+        <a href="#" data-item-action="{{item.Key}}" data-item="{{itemJson}}" class="dropdown-item list-action">
+          {{item.Title}}
+        </a>
+        {{end}}
+      </div>
+    </div>
+  </td>
+  {{end}}
+
+{{end}}

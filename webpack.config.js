@@ -30,8 +30,7 @@ module.exports = {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Headers":
-        "*",
+      "Access-Control-Allow-Headers": "*",
     },
   },
   devtool: "source-map",
@@ -39,6 +38,7 @@ module.exports = {
     libs: [paths.src.scss + "/libs.scss"],
     theme: [...[paths.src.js + "/theme.js", paths.src.scss + "/theme.scss"]],
     datasource: ["./web/pages/datasources/index.js"],
+    system_rule: ["./web/pages/system/rule/index.js"],
   },
   mode: "development",
   module: {

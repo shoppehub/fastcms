@@ -1,0 +1,31 @@
+
+{{block head(ds)}}
+<thead>
+  <tr>
+    <th>
+      <!-- Checkbox -->
+      <div class="form-check mb-n2">
+        <input class="form-check-input list-checkbox-all"  type="checkbox">
+        <label class="form-check-label" ></label>
+      </div>
+    </th>
+    {{items := ds.Items}}
+    {{range i,item := items}}
+      {{ if !item.Hidden}}
+        {{size := len(items)}}
+        {{size = size-1}}
+        {{ hasAction := i == size && len(ds.ItemActions) >0}}
+
+        <th {{ hasAction ? "colspan=2" : "" }}>
+          {{if item.Sort }}
+          <a class="list-sort text-muted" data-sort="{{item.Key}}" href="#">{{item.Title}}</a>
+          {{else}}
+          <a class="text-muted" href="#">{{item.Title}}</a>
+          {{end}}
+        </th>
+      {{end}}
+    {{end}}
+  </tr>
+</thead>
+
+{{end}}

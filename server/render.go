@@ -2,15 +2,23 @@ package server
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/CloudyKit/jet/v6"
 	"github.com/gin-gonic/gin"
+	"github.com/shoppehub/conf"
+	"github.com/shoppehub/fastapi/crud"
+	"github.com/shoppehub/fastapi/engine/template"
+	"github.com/shoppehub/fastcms/server/list"
 	"github.com/shoppehub/fastcms/server/menu"
+	"gopkg.in/yaml.v2"
 )
 
 var views = jet.NewSet(
@@ -18,28 +26,121 @@ var views = jet.NewSet(
 	jet.InDevelopmentMode(), // remove in production
 )
 
+var resource *crud.Resource
+
+func initResource() {
+	if resource != nil {
+		return
+	}
+	resource, _ = crud.NewDB(conf.GetString("mongodb.url"), conf.GetString("mongodb.dbname"))
+
+}
+
 // 渲染模板
 func RenderTemplate(c *gin.Context) {
+	initResource()
 	module := c.Params.ByName("module")
 	if module == "" {
 		module = "index"
 	}
 	page := c.Params.ByName("page")
-	if page == "" {
-		page = "index"
+	if page == "index" {
+		page = ""
 	}
 
-	path := strings.Join([]string{module, page}, "/")
-	view, err := views.GetTemplate("pages/" + path + ".jet")
+	templ := c.Params.ByName("templ")
+	if templ == "" {
+		templ = "index.jet"
+	} else {
+		templ += ".jet"
+	}
+
+	root := strings.Join([]string{"pages", module, page}, "/")
+	templatePath := strings.Join([]string{root, templ}, "/")
+	view, err := views.GetTemplate(templatePath)
 	if err != nil {
-		c.Status(http.StatusNotFound)
+		c.JSON(http.StatusNotFound, gin.H{
+			"err": err.Error(),
+		})
 		return
 	}
+	configPath := strings.Join([]string{"web", root, "config.yaml"}, "/")
+
+	if !conf.Exists(configPath) {
+		c.JSON(http.StatusNotFound, gin.H{
+			"err": configPath + " not found",
+		})
+		return
+	}
+	strb, cerr := ioutil.ReadFile(configPath)
+	if cerr != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"err": configPath + " read error",
+		})
+		return
+	}
+	var list list.List
+	yamlerr := yaml.Unmarshal(strb, &list)
+	if yamlerr != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"err": yamlerr.Error(),
+		})
+		return
+	}
+
 	c.Header("Content-Type", "text/html; charset=utf-8")
-	vars := make(jet.VarMap)
+	vars := template.NewVars(resource, nil)
+
 	vars.Set("menus", menu.GetAppMenus(menu.SystemApplicationKey))
+	vars.Set("namespace", strings.Join([]string{module, page}, "_"))
+	vars.Set("list", &list)
+
+	vars.Set("path", c.Request.URL.Path)
+	var curPage int64
+	if c.Query("curPage") == "" {
+		curPage = 1
+	} else {
+		curPage, _ = strconv.ParseInt(c.Query("curPage"), 10, 64)
+	}
+
+	vars.Set("curPage", curPage)
+
+	vars.SetFunc("numArray", func(a jet.Arguments) reflect.Value {
+
+		var total int
+		k := a.Get(0).Kind()
+		switch k {
+		case reflect.Float64:
+			total = int(a.Get(0).Float())
+		case reflect.Int64:
+			total = int(a.Get(0).Int())
+		}
+
+		nums := make([]int64, total)
+		for i := 0; i < total; i++ {
+			nums[i] = int64(i + 1)
+		}
+		return reflect.ValueOf(nums)
+	})
+
+	vars.SetFunc("getUrlPath", func(a jet.Arguments) reflect.Value {
+
+		if !a.Get(0).IsValid() {
+			return reflect.ValueOf("")
+		}
+
+		u, _ := url.Parse(a.Get(0).Interface().(string))
+		return reflect.ValueOf(u.Path)
+	})
+
 	// vars.Set("showingAllDone", true)
-	view.Execute(c.Writer, vars, nil)
+	rerr := view.Execute(c.Writer, vars, nil)
+	if rerr != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"err": rerr.Error(),
+		})
+		return
+	}
 	c.Status(200)
 }
 

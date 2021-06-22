@@ -34,6 +34,8 @@ func New() *gin.Engine {
 	r.GET("/", RenderTemplate)
 	r.GET("/:module", RenderTemplate)
 	r.GET("/:module/:page", RenderTemplate)
+	r.GET("/:module/:page/:templ", RenderTemplate)
+
 	// r.GET("/mod/:name", server.RenderTemplate)
 
 	r.GET("/assets/*path", func(c *gin.Context) {

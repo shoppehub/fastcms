@@ -1,0 +1,49 @@
+{{extends "../../../layout/admin.jet"}}
+
+{{import "../../../layout/components/list/index.jet"}}
+{{import "./new.jet"}}
+
+{{block mainBody()}}
+
+<!-- MAIN CONTENT -->
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12">
+
+      <!-- Header -->
+      <div class="header">
+        <div class="header-body">
+          <div class="row align-items-center">
+            <div class="col">
+              <!-- Title -->
+              <h1 class="header-title text-truncate">
+                角色
+              </h1>
+            </div>
+            <div class="col-auto">
+
+              <!-- Buttons -->
+              <a href="#!" class="btn btn-primary ms-2 btn-new"  data-bs-target="#{{namespace}}_new" data-bs-whatever="dd">
+                添加新记录
+              </a>
+
+            </div>
+          </div> <!-- / .row -->
+        
+        </div>
+      </div>
+    
+      <div id="main-list">
+       
+       {{include "./list.jet"}}
+
+      </div>
+    </div>
+  </div> <!-- / .row -->
+</div>
+
+{{yield newForm()}}
+{{end}}
+
+

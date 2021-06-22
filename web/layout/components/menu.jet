@@ -1,15 +1,18 @@
 <!-- NAVIGATION -->
 
-{{block nav(menu) }}
-
-<li class="nav-item">
+{{block nav(menu,level) }}
+{{ _path := getUrlPath(menu.Href) }}
+<li class="nav-item {{ _path ==path?"nav-open":""}}">
   {{if len(menu.Children)}}
   <a href="#{{menu.Key}}" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false"
     aria-controls="{{menu.Key}}">
+    {{if level ==0}}
+      <i class="fe {{menu.Icon?menu.Icon:"fe-file"}}"></i>
+    {{end}}
     {{menu.Title}}
   </a>
   {{else}}
-  <a href="{{menu.Href}}" class="nav-link">
+  <a href="{{menu.Href}}"  class="nav-link {{ _path ==path?"active":""}}">
     {{menu.Title}}
   </a>
   {{end}}
@@ -17,14 +20,12 @@
   <div class="collapse " id="{{menu.Key}}">
     <ul class="nav nav-sm flex-column">
       {{ range iindex,item := menu.Children }}
-      {{yield nav(menu=item)}}
+        {{yield nav(menu=item,level=level+1)}}
       {{ end }}
     </ul>
   </div>
   {{end}}
 </li>
-
-
 {{end}}
 
 
@@ -41,28 +42,11 @@
 
     <!-- Collapse -->
     <div class="collapse navbar-collapse">
-
       <!-- Navigation -->
       <ul class="navbar-nav">
-        
-      {{ range index,menu:= menus }}
-        <li class="nav-item">
-          <a class="nav-link"  href="#{{menu.Key}}" data-bs-toggle="collapse" role="button" aria-expanded="false"
-            aria-controls="{{menu.Key}}">
-            <i class="fe {{menu.Icon?menu.Icon:" fe-file"}} "></i> {{menu.Title}}
-          </a>
-          {{ if len(menu.Children)  }}
-          <div class=" collapse " id="{{menu.Key}}">
-              <ul class="nav nav-sm flex-column">
-                {{ range iindex,item := menu.Children }}
-                {{yield nav(menu=item)}}
-                {{ end }}
-              </ul>
-          </div>
-          {{end}}
-        </li>
-      {{end}}
-
+        {{ range index,menu:= menus }}
+          {{yield nav(menu=menu,level=0)}}       
+        {{end}}
       </ul>
 
     </div> <!-- / .navbar-collapse -->

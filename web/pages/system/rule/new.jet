@@ -1,0 +1,65 @@
+{{block newForm()}}
+
+
+
+<div class="modal" id="{{namespace}}_new" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">新增角色</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="mb-4 needs-validation" novalidate>
+
+          <!-- Project name -->
+          <div class="form-group">
+
+            <!-- Label  -->
+            <label class="form-label">
+              角色名称
+            </label>
+
+            <!-- Input -->
+            <input type="text" name="name" class="form-control" required>
+            <div class="invalid-feedback">
+              请输入角色名称
+            </div>
+          </div>
+
+          <!-- Project description -->
+          <div class="form-group">
+
+            <!-- Label -->
+            <label class="form-label mb-1 ">
+              角色描述
+            </label>
+
+            <!-- Text -->
+            <small class="form-text text-muted">
+              详细描述角色的信息，用于哪些人群等等
+            </small>
+
+            <!-- Textarea -->
+            <div data-quill data-for="desc"></div>
+            <input type="hidden" name="desc" class="form-control " required>
+            <div class="invalid-feedback">
+              请输入角色描述
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary form-submit">保存</button>
+        <button class="btn btn-primary form-loading d-none" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{end}}

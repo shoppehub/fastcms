@@ -10,7 +10,7 @@ import {
   ScrollSpy,
   Tab,
   Toast,
-  Tooltip,
+  Tooltip
 } from 'bootstrap';
 
 // Make available globally

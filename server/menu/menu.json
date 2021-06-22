@@ -1,19 +1,19 @@
 [
   {
-    "key": "datasource",
+    "key": "datasources",
     "title": "数据源",
     "href": "/",
     "icon": "fe-server",
     "children": [
       {
-        "key": "datasource_new",
-        "title": "新增数据源",
-        "href": "/datasource/new"
+        "key": "datasources_new",
+        "title": "新增集合",
+        "href": "/datasources/new"
       },
       {
-        "key": "/datasource_index",
-        "title": "数据源",
-        "href": "/datasource/index"
+        "key": "/datasources_index",
+        "title": "数据集合",
+        "href": "/datasources/index"
       }
     ]
   },
@@ -40,7 +40,7 @@
           {
             "key": "system_feature",
             "title": "权限",
-            "href": "/system/feature"
+            "href": "/system/feature?a=1"
           },
           {
             "key": "system_features",
@@ -58,6 +58,12 @@
         "key": "system_log",
         "title": "操作日志",
         "href": "/system/log"
+      }
+      ,
+      {
+        "key": "system_menu",
+        "title": "菜单管理",
+        "href": "/system/menu"
       }
     ]
   }

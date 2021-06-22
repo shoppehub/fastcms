@@ -1,0 +1,6 @@
+
+{{ pageSize := 5 }}
+{{ rules := query( aggregate(d("$sort",d("_id",-1))), findOption("system_rule",curPage,pageSize)) }}
+{{list.Values = rules}}
+
+{{include "../../../layout/components/list/index.jet"}}
