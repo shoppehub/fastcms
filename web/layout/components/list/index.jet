@@ -8,7 +8,7 @@
   <div class="tab-pane fade show active"  role="tabpanel" >
 
     <!-- Card -->
-    <div class="card" data-list='{}'>
+    <div class="card" >
       {{yield filter(ds=list)}}
       <div class="table-responsive" style="overflow-x:unset">
         <table class="table table-sm table-hover table-nowrap card-table">

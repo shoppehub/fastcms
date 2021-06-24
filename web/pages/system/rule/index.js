@@ -8,6 +8,8 @@ init("https://api.chemball.com");
 export default (function () {
   var modal = document.getElementById("system_rule_new");
 
+  console.log(document.querySelector(".data-list").dataset)
+
   document.querySelector(".btn-new").addEventListener("click", function (e) {
     const data = Modal.getInstance(modal) || new Modal(modal);
     data.toggle(this);

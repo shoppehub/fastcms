@@ -34,7 +34,7 @@
         </div>
       </div>
     
-      <div id="main-list">
+      <div id="main-list" class="data-list" data-pagination_totalPage="1">
        
        {{include "./list.jet"}}
 

@@ -20,6 +20,7 @@
     {{else}}
         <li class="page-item"><a class="page-link" href="#" data-i="{{v}}">{{v}}</a></li>
     {{end}}
+     <li class="page-item"><a class="page-link" href="#" data-i="{{v}}">...</a></li>
   {{end}} 
 
   
