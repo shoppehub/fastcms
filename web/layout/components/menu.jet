@@ -20,7 +20,7 @@
   </a>
   {{end}}
   {{ if len(menu.Children) }}
-  <div class="collapse " id="{{menu.Key}}">
+  <div class="collapse  " id="{{menu.Key}}">
     <ul class="nav nav-sm flex-column">
       {{ range iindex,item := menu.Children }}
         {{yield nav(menu=item,level=level+1)}}

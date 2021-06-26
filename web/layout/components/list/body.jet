@@ -1,6 +1,8 @@
 
 {{block body(ds)}}
 
+{{if ds.Values}}
+
 <tbody class="list fs-base" >
   {{range iv,itemValue := ds.Values.Data}}
   {{itemJson := json(itemValue)}}
@@ -29,6 +31,7 @@
   </tr>
  {{end}}
 </tbody>
+{{end}}
 {{end}}
 
 

@@ -1,6 +1,7 @@
 {{extends "../../../layout/admin.jet"}}
 
-
+{{import "../../../layout/components/list/head.jet"}}
+{{import "../../../layout/components/list/body.jet"}}
 
 
 
@@ -60,7 +61,7 @@
 
             </div>
             <div class="fs-5">
-              <a href="#" class="!">编辑</a>
+              <a href="#" class="me-3">编辑</a>
               <a href="#">删除</a>
             </div>
           </div>
@@ -71,59 +72,37 @@
               <li class="list-group-item">
                 <div class="row align-items-center">
 
-                  <div class="col ms-n2">
-
-                    <!-- Title -->
-                    <h4 class="mb-1 name">
-                      <a href="#!">Launchday Logo</a>
-                    </h4>
-
-                    <!-- Text -->
-                    <p class="card-text small text-muted mb-1">
-                      2.5kb SVG
-                    </p>
-
-                    <!-- Time -->
-                    <p class="card-text small text-muted">
-                      Uploaded by Dianna Smiley on <time datetime="2018-01-03">Jan 3, 2018</time>
-                    </p>
-
+                  <div class="table-responsive" style="overflow-x:unset">
+                    
+                    <table class="table table-sm table-nowrap">
+                      <thead>
+                        <tr>
+                          <th scope="col">产品图片</th>
+                          <th scope="col">规格</th>
+                          <th scope="col">品质</th>
+                          <th scope="col">级别</th>
+                          <th scope="col">最大产能</th>
+                          <th scope="col">发货周期</th>
+                          <th scope="col">包装</th>
+                          <th scope="col">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Mark</td>
+                          <td>Otto</td>
+                          <td>@mdo</td>
+                          <td>Mark</td>
+                          <td>Otto</td>
+                          <td>@mdo</td>
+                          <td>Mark</td>
+                          <td>Otto</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="col-auto">
 
-                    <!-- Button -->
-                    <a href="#!" class="btn btn-sm btn-white d-none d-md-inline-block">
-                      Download
-                    </a>
-
-                  </div>
-                  <div class="col-auto">
-
-                    <!-- Dropdown -->
-                    <div class="dropdown">
-
-                      <!-- Toggle -->
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-
-                      <!-- Menu -->
-                      <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-
-                    </div>
-
-                  </div>
+                 
                 </div> <!-- / .row -->
               </li>
             </ul>
