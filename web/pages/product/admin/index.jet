@@ -2,136 +2,143 @@
 
 
 
+
+
 {{block mainBody()}}
+  {{menus := getMenu("supplier")}}
+  {{yield menu(menus=menus)}}
+  
+<div class="main-content">
 
 
 
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-12">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
 
-      <!-- Header -->
-      <div class="header">
-        <div class="header-body">
-          <div class="row align-items-center">
-            <div class="col">
+        <!-- Header -->
+        <div class="header">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
 
 
-              <!-- Title -->
-              <h1 class="header-title text-truncate">
-                产品管理
-              </h1>
+                <!-- Title -->
+                <h1 class="header-title text-truncate">
+                  产品管理
+                </h1>
 
-            </div>
-            <div class="col-auto">
-              <div class="row">
-                <form class="bg-white" style="width:240px">
-                  <div class="input-group input-group-flush input-group-merge input-group-reverse">
-                    <input class="form-control list-search" type="search" placeholder="输入产品名称、CAS号查询">
-                    <span class="input-group-text">
-                      <i class="fe fe-search"></i>
-                    </span>
-                  </div>
-                </form>
+              </div>
+              <div class="col-auto">
+                <div class="row">
+                  <form class="bg-white" style="width:240px">
+                    <div class="input-group input-group-flush input-group-merge input-group-reverse">
+                      <input class="form-control list-search" type="search" placeholder="输入产品名称、CAS号查询">
+                      <span class="input-group-text">
+                        <i class="fe fe-search"></i>
+                      </span>
+                    </div>
+                  </form>
 
+                </div>
+
+              </div>
+            </div> <!-- / .row -->
+          </div>
+        </div>
+
+
+        <!-- Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex align-items-center">
+              <label class="fs-4 fw-bolder">1-邻氰苯乙烯基-4-对氰苯乙烯基苯</label>
+              <div class="fs-5" style="margin-left: 24px;">
+                <label class="text-secondary">CAS号：</label>
+                <span>12001-38-2</span>
               </div>
 
             </div>
-          </div> <!-- / .row -->
-        </div>
-      </div>
-
-
-      <!-- Card -->
-      <div class="card">
-        <div class="card-header">
-          <div class="d-flex align-items-center">
-            <label class="fs-4 fw-bolder">1-邻氰苯乙烯基-4-对氰苯乙烯基苯</label>
-            <div class="fs-5" style="margin-left: 24px;">
-              <label class="text-secondary">CAS号：</label>
-              <span>12001-38-2</span>
+            <div class="fs-5">
+              <a href="#" class="!">编辑</a>
+              <a href="#">删除</a>
             </div>
-            
           </div>
-          <div class="fs-5">
-            <a href="#" class="!">编辑</a>
-            <a href="#">删除</a>
-          </div>
-        </div>
-        <div class="card-body">
+          <div class="card-body">
 
-          <!-- List -->
-          <ul class="list-group list-group-lg list-group-flush list my-n4">
-            <li class="list-group-item">
-              <div class="row align-items-center">
+            <!-- List -->
+            <ul class="list-group list-group-lg list-group-flush list my-n4">
+              <li class="list-group-item">
+                <div class="row align-items-center">
 
-                <div class="col ms-n2">
+                  <div class="col ms-n2">
 
-                  <!-- Title -->
-                  <h4 class="mb-1 name">
-                    <a href="#!">Launchday Logo</a>
-                  </h4>
+                    <!-- Title -->
+                    <h4 class="mb-1 name">
+                      <a href="#!">Launchday Logo</a>
+                    </h4>
 
-                  <!-- Text -->
-                  <p class="card-text small text-muted mb-1">
-                    2.5kb SVG
-                  </p>
+                    <!-- Text -->
+                    <p class="card-text small text-muted mb-1">
+                      2.5kb SVG
+                    </p>
 
-                  <!-- Time -->
-                  <p class="card-text small text-muted">
-                    Uploaded by Dianna Smiley on <time datetime="2018-01-03">Jan 3, 2018</time>
-                  </p>
+                    <!-- Time -->
+                    <p class="card-text small text-muted">
+                      Uploaded by Dianna Smiley on <time datetime="2018-01-03">Jan 3, 2018</time>
+                    </p>
 
-                </div>
-                <div class="col-auto">
+                  </div>
+                  <div class="col-auto">
 
-                  <!-- Button -->
-                  <a href="#!" class="btn btn-sm btn-white d-none d-md-inline-block">
-                    Download
-                  </a>
-
-                </div>
-                <div class="col-auto">
-
-                  <!-- Dropdown -->
-                  <div class="dropdown">
-
-                    <!-- Toggle -->
-                    <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      <i class="fe fe-more-vertical"></i>
+                    <!-- Button -->
+                    <a href="#!" class="btn btn-sm btn-white d-none d-md-inline-block">
+                      Download
                     </a>
 
-                    <!-- Menu -->
-                    <div class="dropdown-menu dropdown-menu-end">
-                      <a href="#!" class="dropdown-item">
-                        Action
+                  </div>
+                  <div class="col-auto">
+
+                    <!-- Dropdown -->
+                    <div class="dropdown">
+
+                      <!-- Toggle -->
+                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fe fe-more-vertical"></i>
                       </a>
-                      <a href="#!" class="dropdown-item">
-                        Another action
-                      </a>
-                      <a href="#!" class="dropdown-item">
-                        Something else here
-                      </a>
+
+                      <!-- Menu -->
+                      <div class="dropdown-menu dropdown-menu-end">
+                        <a href="#!" class="dropdown-item">
+                          Action
+                        </a>
+                        <a href="#!" class="dropdown-item">
+                          Another action
+                        </a>
+                        <a href="#!" class="dropdown-item">
+                          Something else here
+                        </a>
+                      </div>
+
                     </div>
 
                   </div>
+                </div> <!-- / .row -->
+              </li>
+            </ul>
 
-                </div>
-              </div> <!-- / .row -->
-            </li>
-          </ul>
-
+          </div>
         </div>
+
+
+
       </div>
 
 
-
     </div>
-
-
-  </div>
-</div> <!-- / .row -->
+  </div> <!-- / .row -->
+</div>
 </div>
 
 

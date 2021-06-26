@@ -11,13 +11,11 @@
 
 {{block documentBody()}}
 
-{{yield menu()}}
-<div class="main-content">
+
 
   {{block mainBody()}} {{end}}
-</div>
 
-{{yield alert()}}
+  {{yield alert()}}
 
 {{end}} 
 

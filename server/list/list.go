@@ -1,8 +1,15 @@
 package list
 
 import (
+	"io/ioutil"
+	"reflect"
+	"strings"
+
+	"github.com/CloudyKit/jet/v6"
 	"github.com/shoppehub/commons"
+	"github.com/shoppehub/conf"
 	"github.com/shoppehub/fastapi/base"
+	"gopkg.in/yaml.v2"
 )
 
 // 表格模型
@@ -43,4 +50,34 @@ type ListItem struct {
 type ListItemAction struct {
 	Key   string `bson:"key,omitempty" json:"key,omitempty" yaml:"key,omitempty"`
 	Title string `bson:"title,omitempty" json:"title,omitempty" yaml:"title,omitempty"`
+}
+
+// 初始化模板
+func InitTemplate(vars *jet.VarMap, root string) {
+	vars.SetFunc("getListConfig", func(a jet.Arguments) reflect.Value {
+		key := "config"
+		if a.NumOfArguments() != 0 {
+			key = a.Get(0).String()
+		}
+
+		key += ".yaml"
+
+		configPath := strings.Join([]string{"web", root, key}, "/")
+
+		if conf.Exists(configPath) {
+			strb, cerr := ioutil.ReadFile(configPath)
+			if cerr != nil {
+				return reflect.ValueOf(List{})
+			}
+			var result List
+			yamlerr := yaml.Unmarshal(strb, &result)
+			if yamlerr != nil {
+				return reflect.ValueOf(List{})
+			}
+			return reflect.ValueOf(&result)
+		} else {
+			return reflect.ValueOf(List{})
+		}
+
+	})
 }

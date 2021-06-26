@@ -4,7 +4,11 @@
 {{import "./new.jet"}}
 
 {{block mainBody()}}
+  {{menus := getMenu("system")}}
 
+  {{yield menu(menus=menus)}}
+
+<div class="main-content">
 <!-- MAIN CONTENT -->
 
 <div class="container-fluid">
@@ -43,7 +47,9 @@
   </div> <!-- / .row -->
 </div>
 
+</div>
 {{yield newForm()}}
+
 {{end}}
 
 

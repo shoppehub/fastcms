@@ -9,11 +9,11 @@
 
     <!-- Card -->
     <div class="card" >
-      {{yield filter(ds=list)}}
+      {{yield filter(ds=.)}}
       <div class="table-responsive" style="overflow-x:unset">
         <table class="table table-sm table-hover table-nowrap card-table">
-          {{yield head(ds=list)}}
-          {{yield body(ds=list)}}
+          {{yield head(ds=.)}}
+          {{yield body(ds=.)}}
       
         </table>
       </div>

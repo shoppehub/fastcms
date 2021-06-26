@@ -1,0 +1,43 @@
+[
+  {
+    "key": "inquiry_admin",
+    "title": "询盘管理",
+    "href": "/",
+    "icon": "fe-server"
+  },
+  {
+    "key": "shop_admin",
+    "title": "店铺管理",
+    "href": "/",
+    "icon": "fe-server"
+  },
+  {
+    "key": "product_admin",
+    "title": "产品管理",
+    "href": "/",
+    "icon": "fe-settings",
+    "children": [
+      {
+        "key": "product_admin_new",
+        "title": "发布产品",
+        "href": "/product/admin/new"
+      },
+      {
+        "key": "product_admin_index",
+        "title": "产品管理",
+        "href": "/product/admin"
+      },
+      {
+        "key": "product_admin_recommend",
+        "title": "产品推荐",
+        "href": "/product/admin/recommend"
+      }
+    ]
+  },
+  {
+    "key": "customer_admin",
+    "title": "客户管理",
+    "href": "/",
+    "icon": "fe-server"
+  }
+]

@@ -13,6 +13,9 @@
   </a>
   {{else}}
   <a href="{{menu.Href}}"  class="nav-link {{ _path ==path?"active":""}}">
+    {{if level ==0}}
+      <i class="fe {{menu.Icon?menu.Icon:"fe-file"}}"></i>
+    {{end}}
     {{menu.Title}}
   </a>
   {{end}}
@@ -29,7 +32,7 @@
 {{end}}
 
 
-{{block menu()}}
+{{block menu(menus)}}
 <nav class="navbar navbar-vertical fixed-start navbar-expand-md navbar-light" id="sidebar">
   <div class="container-fluid">
 

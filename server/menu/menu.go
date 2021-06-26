@@ -3,8 +3,14 @@ package menu
 import (
 	_ "embed"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"reflect"
+	"strings"
 
+	"github.com/CloudyKit/jet/v6"
 	"github.com/shoppehub/fastapi/base"
+	"github.com/sirupsen/logrus"
 )
 
 //go:embed menu.json
@@ -13,7 +19,36 @@ var defaultMenuStr []byte
 var SystemApplicationKey = "system"
 var systemMenus []Menu
 
+var localMenus = make(map[string][]Menu)
+
 func init() {
+
+	root := "./web/menus"
+
+	files, _ := ioutil.ReadDir(root)
+
+	fmt.Println(files)
+
+	for _, v := range files {
+
+		if strings.HasSuffix(v.Name(), ".json") {
+
+			strbs, err := ioutil.ReadFile(strings.Join([]string{root, v.Name()}, "/"))
+			if err != nil {
+				logrus.Panicln(err)
+				return
+			}
+			var ms []Menu
+			err = json.Unmarshal(strbs, &ms)
+			if err != nil {
+				logrus.Panicln(err)
+				return
+			}
+			localMenus[strings.TrimSuffix(v.Name(), ".json")] = ms
+		}
+
+	}
+
 	json.Unmarshal(defaultMenuStr, &systemMenus)
 }
 
@@ -27,12 +62,19 @@ type Menu struct {
 	Children       []Menu `bson:"children,omitempty" json:"children,omitempty"`
 }
 
-// 获取menu
-func GetAppMenus(applicationKey string) []Menu {
+// 初始化模板
+func InitTemplate(views *jet.Set) {
+	views.AddGlobalFunc("getMenu", func(a jet.Arguments) reflect.Value {
+		applicationKey := SystemApplicationKey
+		if a.NumOfArguments() != 0 {
+			applicationKey = a.Get(0).String()
+		}
 
-	if applicationKey == SystemApplicationKey {
-		return systemMenus
-	}
-
-	return nil
+		if menus, ok := localMenus[applicationKey]; ok {
+			return reflect.ValueOf(menus)
+		}
+		return reflect.ValueOf([]Menu{})
+	})
 }
+
+//vars.Set("menus", menu.GetAppMenus(menu.SystemApplicationKey))

@@ -1,0 +1,70 @@
+[
+  {
+    "key": "datasources",
+    "title": "数据源",
+    "href": "/",
+    "icon": "fe-server",
+    "children": [
+      {
+        "key": "datasources_new",
+        "title": "新增集合",
+        "href": "/datasources/new"
+      },
+      {
+        "key": "/datasources_index",
+        "title": "数据集合",
+        "href": "/datasources/index"
+      }
+    ]
+  },
+  {
+    "key": "system",
+    "title": "系统管理",
+    "href": "/",
+    "icon": "fe-settings",
+    "children": [
+      {
+        "key": "system_rule",
+        "title": "权限管理",
+        "children": [
+          {
+            "key": "system_rule",
+            "title": "角色",
+            "href": "/system/rule"
+          },
+          {
+            "key": "system_rules",
+            "title": "角色组",
+            "href": "/system/rules"
+          },
+          {
+            "key": "system_feature",
+            "title": "权限",
+            "href": "/system/feature?a=1"
+          },
+          {
+            "key": "system_features",
+            "title": "权限组",
+            "href": "/system/features"
+          }
+        ]
+      },
+      {
+        "key": "system_account",
+        "title": "账户管理",
+        "href": "/system/account"
+      },
+      {
+        "key": "system_log",
+        "title": "操作日志",
+        "href": "/system/log"
+      }
+      ,
+      {
+        "key": "system_menu",
+        "title": "菜单管理",
+        "href": "/system/menu"
+      }
+    ]
+  }
+]

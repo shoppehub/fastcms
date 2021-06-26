@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -18,7 +17,7 @@ import (
 	"github.com/shoppehub/fastapi/engine/template"
 	"github.com/shoppehub/fastcms/server/list"
 	"github.com/shoppehub/fastcms/server/menu"
-	"gopkg.in/yaml.v2"
+	"github.com/sirupsen/logrus"
 )
 
 var views = jet.NewSet(
@@ -32,7 +31,16 @@ func initResource() {
 	if resource != nil {
 		return
 	}
-	resource, _ = crud.NewDB(conf.GetString("mongodb.url"), conf.GetString("mongodb.dbname"))
+	var err error
+	resource, err = crud.NewDB(conf.GetString("mongodb.url"), conf.GetString("mongodb.dbname"))
+	if err != nil {
+		logrus.Error(err)
+	}
+}
+
+func init() {
+
+	menu.InitTemplate(views)
 
 }
 
@@ -64,36 +72,14 @@ func RenderTemplate(c *gin.Context) {
 		})
 		return
 	}
-	configPath := strings.Join([]string{"web", root, "config.yaml"}, "/")
-
-	if !conf.Exists(configPath) {
-		c.JSON(http.StatusNotFound, gin.H{
-			"err": configPath + " not found",
-		})
-		return
-	}
-	strb, cerr := ioutil.ReadFile(configPath)
-	if cerr != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"err": configPath + " read error",
-		})
-		return
-	}
-	var list list.List
-	yamlerr := yaml.Unmarshal(strb, &list)
-	if yamlerr != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"err": yamlerr.Error(),
-		})
-		return
-	}
 
 	c.Header("Content-Type", "text/html; charset=utf-8")
 	vars := template.NewVars(resource, nil)
 
-	vars.Set("menus", menu.GetAppMenus(menu.SystemApplicationKey))
+	list.InitTemplate(vars, root)
+
+	// vars.Set("menus", menu.GetAppMenus(menu.SystemApplicationKey))
 	vars.Set("namespace", strings.Join([]string{module, page}, "_"))
-	vars.Set("list", &list)
 
 	vars.Set("path", c.Request.URL.Path)
 	var curPage int64
@@ -134,7 +120,7 @@ func RenderTemplate(c *gin.Context) {
 	})
 
 	// vars.Set("showingAllDone", true)
-	rerr := view.Execute(c.Writer, vars, nil)
+	rerr := view.Execute(c.Writer, *vars, nil)
 	if rerr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"err": rerr.Error(),
